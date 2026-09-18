@@ -52,7 +52,7 @@ https://raw.githubusercontent.com/chiron09/wloc/refs/heads/main/modules/wloc.mod
 
 ### 关于地图链接解析（worker）
 
-为了让苹果地图和高德走同一条流程，链接统一发给 `wloc-spoofer.mrhackz007.workers.dev/api/parse` 解析：
+为了让苹果地图和高德走同一条流程，链接统一发给 `wloc.gmw.cc.cd/api/parse` 解析：
 
 - **高德**：分享出来是短链，真实坐标只藏在 302 跳转的 `Location` 头里，且是 GCJ-02 偏移坐标。快捷指令既读不到跳转头、也难做坐标换算，所以由 worker 跟跳转 → 抠坐标 → GCJ-02→WGS84 → 返回经纬度。
 - **苹果地图**：链接里直接带 `coordinate=纬度,经度`，但在**中国大陆同样是 GCJ-02 偏移坐标**，所以和高德一样由 worker 做 GCJ-02→WGS84 换算后返回；境外坐标会自动跳过换算（`out_of_china` 判断）原样返回。除了统一坐标系，走同一接口也方便统一处理短链、文本夹链接、名称解码等。
